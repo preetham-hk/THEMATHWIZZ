@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">THEMATHWIZZ</string>
+    <string name="reg_gender">Gender</string>
+    <string name="reg_class">Class</string>
+    <string name="register">Register</string>
+    <string name="forgot_pass">forgot password?</string>
+    <string name="Login">Login</string>
+    <string name="success_message">Registration Successful</string>
+    <string name="error_email_exists">Email Already Exists</string>
+
+    
+</resources>
