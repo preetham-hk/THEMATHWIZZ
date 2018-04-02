@@ -7,72 +7,93 @@
     android:background="@drawable/bg4"
     tools:context="com.adityaedu.themathwizz.activities.MainActivity">
 
-    <ImageView
-        android:id="@+id/imageView"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/logo"
-        android:layout_alignParentTop="true"
+        android:id="@+id/layout_main">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:contentDescription="@string/android"
+            app:srcCompat="@drawable/logo" />
+
+    </LinearLayout>
+    <FrameLayout
+        android:id="@+id/FrameLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:layout_below="@+id/layout_main">
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/fb_login_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:background="#416BC1"
+            android:onClick="onClick"
+            android:text="Sign in with Facebook"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:textAllCaps="false"/>
+    </FrameLayout>
+
+    <com.shobhitpuri.custombuttons.GoogleSignInButton
+        android:id="@+id/google_sign_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:layout_below="@+id/FrameLayout1"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="29dp" />
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:onClick="onClick" />
 
-    <!-- Login progress -->
+    <Button
+        android:id="@+id/button_register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/green"
+        android:layout_below="@+id/google_sign_button"
+        android:gravity="center"
+        android:onClick="onClick"
+        android:text="@string/register"
+        android:textColor="@android:color/white"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        />
 
+    <TextView
+        android:id="@+id/Login_textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/main_ac"
+        android:layout_below="@id/button_register"
+        android:gravity="center|center_horizontal"
+        android:textStyle="bold"/>
 
-            <!-- <com.google.android.gms.common.SignInButton
-                android:id="@+id/g_sign_in_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="20dp"
-                android:padding="5dp" />
-
-                <com.facebook.login.widget.LoginButton
-                xmlns:fb="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/fb_sign_in_button"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_below="@+id/g_sign_in_button"
-                android:layout_gravity="center"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="20dp"
-                fb:login_text="FACEBOOK"
-                android:padding="5dp" />
-                -->
-
-            <Button
-                android:id="@+id/button_login"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                android:onClick="onClick"
-                android:text="@string/Login"
-                android:textColor="@android:color/white"
-                android:layout_above="@+id/button_register"
-                android:layout_marginRight="15dp"
-                android:layout_marginLeft="15dp"
-                android:gravity="center"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginBottom="44dp" />
-
-            <Button
-                android:id="@+id/button_register"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="onClick"
-                android:text="Register"
-                android:textColor="@android:color/white"
-                android:background="@color/colorPrimary"
-                android:layout_marginRight="15dp"
-                android:layout_marginLeft="15dp"
-                android:gravity="center"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
-
+    <TextView
+        android:id="@+id/Login_textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Login_textView"
+        android:layout_marginTop="20dp"
+        android:gravity="center|center_horizontal"
+        android:onClick="onClick"
+        android:text="@string/main_signIn"
+        android:textSize="14sp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
+        android:textStyle="bold" />
 
 </RelativeLayout>

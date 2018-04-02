@@ -1,12 +1,45 @@
 <resources>
-    <string name="app_name">THEMATHWIZZ</string>
+    <string name="app_name">The Math Whizz</string>
     <string name="reg_gender">Gender</string>
     <string name="reg_class">Class</string>
-    <string name="register">Register</string>
+    <string name="reg_curriculum">Curriculum</string>
+    <string name="register">Sign Up With Email</string>
+    <string name="reg_signUp">SIgn Up</string>
+    <string name="reg_child">Add Child</string>
+    <string name="main_ac">Already a User?</string>
+    <string name="main_signIn">SIGN IN</string>
+    <string name="main_logo">logo</string>
     <string name="forgot_pass">forgot password?</string>
     <string name="Login">Login</string>
     <string name="success_message">Registration Successful</string>
+    <string name="error_message_name">Enter Full Name</string>
+    <string name="error_message_email">Enter Valid Email</string>
+    <string name="error_message_age">Enter Age</string>
+    <string name="error_message_password">Enter Password</string>
+    <string name="error_password_match">Password Does Not Matches</string>
     <string name="error_email_exists">Email Already Exists</string>
+    <string name="main_signIn_button">Sing In</string>
+    <string name="facebook_app_id">191003404980336</string>
+    <string name="fb_login_protocol_scheme">fb191003404980336</string>
+    <string name="parse_app_id">3e1697b971372d06d7618398c0da7f07d1b0e648</string>
+    <string name="parse_client_key">e8f6df3e98e5f914b47033e52e247326f3554395</string>
+    <string name="back4app_server_url">https://parseapi.back4app.com/</string>
+    <string name="back4app_app_id">pKC2KO7L0niIwNQp7rmZFsSEw7xjLOozstVeYXxg</string>
+    <string name="back4app_client_key">BEpIlRVxShJdyAIou6BpcJFiPAERnNs5sEibDlB7</string>
 
-    
+
+    <string name="question">Question</string>
+    <string name="play_again">Play again</string>
+    <string name="time">15</string>
+    <string name="wrongans">Opps the ans was wrong</string>
+    <string name="timeup">Time Up</string>
+    <string name="play_game">Play Game</string>
+    <string name="quit">Quit</string>
+    <string name="cancel">✖</string>
+
+    <string name="next_question">Next Question</string>
+    <string name="try_again">Try Again</string>
+    <string name="correct">Correct</string>
+    <string name="wrong">Wrong </string>
+
 </resources>

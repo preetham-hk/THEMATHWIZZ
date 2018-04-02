@@ -1,6 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-</LinearLayout>
+        <technolifestyle.com.imageslider.FlipperLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/flipper_layout"
+            android:layout_width="match_parent"
+            android:layout_height="170dp"/>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <Button
+                android:id="@+id/home_recent_activities_Button"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|center"
+                android:text="Your Recent Activities"
+                android:layout_marginTop="245dp"
+                android:paddingTop="10dp"/>
+
+            <TextView
+                android:id="@+id/home_classes"
+                android:layout_width="match_parent"
+                android:layout_height="22dp"
+                android:text="Classes"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#f111"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center|center_horizontal"
+                android:layout_below="@id/home_recent_activities_Button"/>
+
+
+            <GridLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/home_classes"
+                android:layout_marginBottom="20dp"
+                android:layout_centerInParent="true"
+                android:columnCount="3"
+                android:rowCount="3"
+                android:layout_marginTop="10dp">
+
+                <ImageButton
+                    android:id="@+id/class1_imageButton"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="10dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:onClick="onClick"
+                    android:src="@drawable/g1_edited1" />
+
+                <ImageButton
+                    android:id="@+id/class2_imageButton"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="10dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:onClick="onClick"
+                    android:src="@drawable/g2_edited" />
+
+                <ImageButton
+                    android:id="@+id/class3_imageButton"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="10dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:onClick="onClick"
+                    android:src="@drawable/g3_edited1" />
+
+                <ImageButton
+
+                    android:id="@+id/class4_imageButton"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_column="0"
+                    android:layout_marginTop="10dp"
+                    android:layout_row="1"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:onClick="onClick"
+                    android:src="@drawable/g4_edited1" />
+
+                <ImageButton
+                    android:id="@+id/class5_imageButton"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="10dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:onClick="onClick"
+                    android:src="@drawable/g5_edited1" />
+
+                <ImageButton
+                    android:id="@+id/class6_imageButton"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="10dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:onClick="onClick"
+                    android:src="@drawable/g6_edited1" />
+
+                <ImageButton
+                    android:id="@+id/class7_imageButton"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_column="0"
+                    android:layout_marginTop="10dp"
+                    android:layout_row="2"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:onClick="onClick"
+                    android:src="@drawable/g7_edited1" />
+
+                <ImageButton
+                    android:id="@+id/class8_imageButton"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="10dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:onClick="onClick"
+                    android:src="@drawable/g8_edited1" />
+
+                <ImageButton
+                    android:id="@+id/class9_imageButton"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="10dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:onClick="onClick"
+                    android:src="@drawable/g9_edited1" />
+            </GridLayout>
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+</ScrollView>
