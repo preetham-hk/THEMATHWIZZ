@@ -48,8 +48,6 @@ public class TopicHelpers {
                     }
                     listView.setAdapter(arrayAdapter);
                     progressDialog.dismiss();
-
-
                 } else {
                     e.printStackTrace();
                 }

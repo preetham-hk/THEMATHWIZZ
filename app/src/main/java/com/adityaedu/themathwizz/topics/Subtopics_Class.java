@@ -46,7 +46,6 @@ public class Subtopics_Class extends AppCompatActivity {
         this.setTitle(classTitle);
 
 
-
         //Load Question and Store them in local Database
         QuizHelper activityQuizScore = new QuizHelper();
         activityQuizScore.LoadQuestions(className);

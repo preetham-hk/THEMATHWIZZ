@@ -31,7 +31,6 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_recyclerlist_row, parent, false);
-
         return new MyViewHolder(itemView);
     }
 
