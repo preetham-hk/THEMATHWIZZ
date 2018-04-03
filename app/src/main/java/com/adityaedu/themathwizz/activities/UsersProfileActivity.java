@@ -4,14 +4,18 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.adityaedu.themathwizz.Adapters.ItemOfList;
+import com.adityaedu.themathwizz.Adapters.RecyclerListAdapter;
+import com.adityaedu.themathwizz.Adapters.RecyclerTouchListener;
 import com.adityaedu.themathwizz.R;
 import com.adityaedu.themathwizz.fragments.ProgressDialogSpinner;
 import com.parse.FindCallback;
@@ -26,7 +30,6 @@ import java.util.List;
 
 /**
  * Created by preetham on 1/18/2018.
- *
  */
 
 public class UsersProfileActivity extends AppCompatActivity {
@@ -34,13 +37,17 @@ public class UsersProfileActivity extends AppCompatActivity {
     protected TextView profile_name;
     protected TextView profile_email;
     protected TextView profile_AddChild;
-    protected ListView childListView;
-    protected String selectedChildName;
+
     protected String childClass;
     protected String childClassQuery;
     protected String childClassSubQuery;
 
+
     ProgressDialog progressDialog;
+    private String username;
+    private List<ItemOfList> itemOfLists = new ArrayList<>();
+    private RecyclerView recyclerView;
+    private RecyclerListAdapter recyclerListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,35 +57,93 @@ public class UsersProfileActivity extends AppCompatActivity {
         profile_name = findViewById(R.id.profile_name);
         profile_email = findViewById(R.id.profile_email);
         profile_AddChild = findViewById(R.id.profile_AddChild);
-        childListView = findViewById(R.id.profile_childAccount_ListView);
+        recyclerView = findViewById(R.id.Profile_childAccount_Recycler);
+        recyclerListAdapter = new RecyclerListAdapter(itemOfLists);
+        recyclerView.setHasFixedSize(true);
 
-         progressDialog = ProgressDialogSpinner.showProgressDialog(this, "Loading");
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(recyclerListAdapter);
+
+        progressDialog = ProgressDialogSpinner.showProgressDialog(this, "Loading");
 
         ParseUser.getCurrentUser().fetchInBackground();
-
         ParseUser currentUser = ParseUser.getCurrentUser();
-        final String username = currentUser.getUsername();
+        username = currentUser.getUsername();
         profile_name.setText(currentUser.getString("Name"));
         profile_email.setText(currentUser.getEmail());
 
-        final ArrayList<String> childAccounts = new ArrayList<>();
-        final ListView listView = findViewById(R.id.profile_childAccount_ListView);
-        final ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, childAccounts);
+        profile_AddChild.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), AddChildActivity.class);
+                startActivity(intent);
+            }
+        });
 
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+
+                ItemOfList selectedItem = itemOfLists.get(position);
+                Log.d("Selected Child", "" + selectedItem);
+                String selectedChildName = selectedItem.getTitle();
+                ParseQuery<ParseObject> query1 = ParseQuery.getQuery("ChildUser");
+                query1.whereEqualTo("Username", username);
+                query1.whereEqualTo("ChildName", selectedChildName);
+                query1.findInBackground(new FindCallback<ParseObject>() {
+                    @Override
+                    public void done(List<ParseObject> objects, ParseException e) {
+                        if (e == null) {
+                            for (ParseObject childClassName : objects) {
+                                childClass = childClassName.getString("Class");
+                                Log.d("Class", childClass);
+                                childClassQuery = "class_" + childClass.charAt(childClass.length() - 1);
+                                Log.d("String Cut", childClassQuery);
+                                childClassSubQuery = "class" + childClass.charAt(childClass.length() - 1);
+                                Log.d("String Cut 2", childClassSubQuery);
+                                progressDialog.dismiss();
+                                //Toast.makeText(getApplicationContext(),""+ selectedChildName,Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(getApplicationContext(), ChildHomeActivity.class);
+                                intent.putExtra("ChildClassName", childClass);
+                                intent.putExtra("childClassQuery", childClassQuery);
+                                intent.putExtra("childClassSubQuery", childClassSubQuery);
+                                startActivity(intent);
+                            }
+                        }
+                    }
+                });
+
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+            }
+        }));
+
+        childUserList();
+
+    }
+
+    private void childUserList() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("ChildUser");
         query.whereEqualTo("Username", username);
         query.orderByAscending("createdAt");
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
-                if (objects.size() > 0){
+                if (objects.size() > 0) {
                     if (e == null) {
                         for (ParseObject childAcc : objects) {
                             String text = childAcc.getString("ChildName");
                             if (text != null && !text.isEmpty()) {
-                                childAccounts.add(childAcc.getString("ChildName"));
+                                String childAccount = childAcc.getString("ChildName");
+                                ItemOfList item = new ItemOfList(childAccount);
+                                itemOfLists.add(item);
                             }
-                            listView.setAdapter(arrayAdapter);
+                            recyclerView.setAdapter(recyclerListAdapter);
                             progressDialog.dismiss();
                         }
 
@@ -86,63 +151,13 @@ public class UsersProfileActivity extends AppCompatActivity {
                         e.printStackTrace();
                         Toast.makeText(getApplicationContext(), "Please Add Student", Toast.LENGTH_LONG).show();
                         progressDialog.dismiss();
-
                     }
-            }
-            else {
+                } else {
                     progressDialog.dismiss();
-                    Toast.makeText(UsersProfileActivity.this,"No Child Account Exist, Please Add", Toast.LENGTH_LONG).show();
-               }
-
-
-            }
-
-        });
-
-        profile_AddChild.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent =new Intent(getApplicationContext(),AddChildActivity.class);
-                startActivity(intent);
+                    Toast.makeText(UsersProfileActivity.this, "No Child Account Exist, Please Add", Toast.LENGTH_LONG).show();
+                }
             }
         });
-
-        childListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                progressDialog.show();
-                selectedChildName = (childListView.getItemAtPosition(position)).toString();
-                //getting Child Class
-                ParseQuery<ParseObject> query1=ParseQuery.getQuery("ChildUser");
-                query1.whereEqualTo("Username", username);
-                query1.whereEqualTo("ChildName",selectedChildName);
-                query1.findInBackground(new FindCallback<ParseObject>() {
-                    @Override
-                    public void done(List<ParseObject> objects, ParseException e) {
-                        if (e == null) {
-                            for (ParseObject childClassName : objects) {
-                                 childClass = childClassName.getString("Class");
-                                Log.d("Class",childClass);
-                                childClassQuery = "class_"+childClass.charAt(childClass.length() - 1);
-                                Log.d("String Cut", childClassQuery);
-                                childClassSubQuery = "class"+childClass.charAt(childClass.length() - 1);
-                                Log.d("String Cut 2", childClassSubQuery);
-                                progressDialog.dismiss();
-                                //Toast.makeText(getApplicationContext(),""+ selectedChildName,Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(getApplicationContext(),ChildHomeActivity.class);
-                                intent.putExtra("ChildClassName", childClass);
-                                intent.putExtra("childClassQuery",childClassQuery);
-                                intent.putExtra("childClassSubQuery",childClassSubQuery);
-                                startActivity(intent);
-                            }
-                        }
-                    }
-                });
-
-
-            }
-        });
-
+        recyclerListAdapter.notifyDataSetChanged();
     }
-
 }
