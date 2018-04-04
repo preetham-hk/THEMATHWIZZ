@@ -1,33 +1,32 @@
 package com.adityaedu.themathwizz.activities;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.adityaedu.themathwizz.Adapters.AsyncTaskUpdateList;
 import com.adityaedu.themathwizz.Adapters.RecyclerHelpers;
 import com.adityaedu.themathwizz.Adapters.ItemOfList;
-import com.adityaedu.themathwizz.Adapters.RecyclerListAdapter;
 import com.adityaedu.themathwizz.Adapters.RecyclerTouchListener;
 import com.adityaedu.themathwizz.R;
 import com.adityaedu.themathwizz.fragments.ProgressDialogSpinner;
+import com.adityaedu.themathwizz.quiz.RecentQuiz;
 import com.adityaedu.themathwizz.topics.Subtopics_Class;
-import com.parse.FindCallback;
 import com.parse.LogOutCallback;
 import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,9 +38,8 @@ import java.util.List;
 public class ChildHomeActivity extends AppCompatActivity {
     TextView childClassView;
     private List<ItemOfList> itemOfLists = new ArrayList<>();
-    private RecyclerView recyclerView;
-    private RecyclerListAdapter recyclerListAdapter;
-
+    RecyclerView recyclerView;
+    RecyclerHelpers recyclerHelpers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,85 +49,72 @@ public class ChildHomeActivity extends AppCompatActivity {
         final String className = bundle.getString("ChildClassName");
         final String childClassQuery = bundle.getString("childClassQuery");
 
-        final ProgressDialog progressDialog = ProgressDialogSpinner.showProgressDialog(this, "Loading");
-
-        RecyclerHelpers recyclerHelpers = new RecyclerHelpers();
-        recyclerHelpers.setFlipperLayout(this, this, R.id.child_Home_flipper_layout);
-
         childClassView = findViewById(R.id.child_class_name);
         childClassView.setText(className);
 
-        recyclerView = findViewById(R.id.Child_Home_RecyclerView);
 
-        recyclerListAdapter = new RecyclerListAdapter(itemOfLists);
-        recyclerView.setHasFixedSize(true);
+         recyclerView = findViewById(R.id.Child_Home_RecyclerView);
+         Button activities_Button = findViewById(R.id.ChildHome_activities_Button);
+         activities_Button.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 Intent intent = new Intent(getApplicationContext(), RecentQuiz.class);
+                 startActivity(intent);
+             }
+         });
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(recyclerListAdapter);
+        //Loading ImageSlidShow
+        recyclerHelpers = new RecyclerHelpers();
+        recyclerHelpers.setFlipperLayout(this, this, R.id.child_Home_flipper_layout);
 
-        getClassTopics(childClassQuery);
-        //recyclerHelpers.populateRecyclerList(this, this, R.id.Child_Home_RecyclerView, "Topics", "Class", childClassQuery, "TopicName");
-
-        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
+        //Getting List of Topics
+        AsyncTaskUpdateList asyncTaskUpdateList = new AsyncTaskUpdateList("Topics", "Class", childClassQuery, "TopicName", this, new AsyncTaskUpdateList.AsyncResponse() {
             @Override
-            public void onClick(View view, int position) {
-                Log.d("position", "" + position);
-                final String TopicSelected;
-                    ItemOfList selectedItem = itemOfLists.get(position);
-                    TopicSelected = selectedItem.getTitle();
-                    Log.d("TopicSelected",""+TopicSelected);
-                switch (position) {
+            public void processFinish(List<ItemOfList> output) {
+                itemOfLists = output;
+                //Adding RecyclerView
+                recyclerHelpers.addRecyclerView(ChildHomeActivity.this, ChildHomeActivity.this, R.id.Child_Home_RecyclerView, itemOfLists, LinearLayoutManager.VERTICAL);
 
-                    case 0:
-                    case 1:
-                    case 2:
-                    case 3:
-                    case 4:
-                    case 5:
-                    case 6:
-                    case 7:
-                    case 8:
-                        launchSubtopics(className, childClassQuery, TopicSelected);
-                }
-            }
-
-            @Override
-            public void onLongClick(View view, int position) {
-
-            }
-        }));
-
-
-        progressDialog.dismiss();
-    }
-
-
-    private void getClassTopics(String childClassQuery) {
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Topics");
-        query.whereEqualTo("Class", childClassQuery);
-        query.orderByAscending("createdAt");
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> objects, ParseException e) {
-                if (e == null) {
-                    for (ParseObject topic : objects) {
-                        String text = topic.getString("TopicName");
-                        if (text != null && !text.isEmpty()) {
-                            String classTopic = topic.getString("TopicName");
-                            ItemOfList item = new ItemOfList(classTopic);
-                            itemOfLists.add(item);
-                            recyclerView.setAdapter(recyclerListAdapter);
+                recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
+                    @Override
+                    public void onClick(View view, int position) {
+                        final String TopicSelected;
+                        ItemOfList selectedItem = itemOfLists.get(position);
+                        TopicSelected = selectedItem.getTitle();
+                        switch (position) {
+                            case 0:
+                            case 1:
+                            case 2:
+                            case 3:
+                            case 4:
+                            case 5:
+                            case 6:
+                            case 7:
+                            case 8:
+                                launchSubtopics(className, childClassQuery, TopicSelected);
                         }
                     }
-                } else {
-                    e.printStackTrace();
-                }
+
+                    @Override
+                    public void onLongClick(View view, int position) {
+
+                    }
+                }));
             }
         });
-        recyclerListAdapter.notifyDataSetChanged();
+
+        asyncTaskUpdateList.execute();
+
+        /*
+        try {
+        //    itemOfLists=asyncTaskUpdateList.get();
+            Log.d("List",""+itemOfLists);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        */
+
     }
 
 

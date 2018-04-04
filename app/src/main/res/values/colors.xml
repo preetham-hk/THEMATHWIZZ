@@ -13,5 +13,8 @@
     <color name="lightGreen">#8BC34A</color>
     <color name="red">#bf0202</color>
     <color name="transparent">#88000000</color>
+    <color name="lightPurple">#EBE2A2BF</color>
+    <color name="purple">#edc6ec</color>
+
 
 </resources>

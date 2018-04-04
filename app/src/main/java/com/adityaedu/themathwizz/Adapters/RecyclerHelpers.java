@@ -35,46 +35,16 @@ public class RecyclerHelpers {
         }
     }
 
-    public  void populateRecyclerList(Activity activity, Context context,int resources, String className,
-                                      String column1, String value1, final String key){
+        public  void addRecyclerView(Activity activity, Context context, int resources, List<ItemOfList> itemOfLists,int orientation){
 
-        final ProgressDialog progressDialog = ProgressDialogSpinner.showProgressDialog(context, "Please Wait");
-
-        final List<ItemOfList> itemOfLists = new ArrayList<>();
-        final RecyclerView recyclerView;
-        final RecyclerListAdapter recyclerListAdapter;
-
-        recyclerView = activity.findViewById(resources);
-        recyclerListAdapter = new RecyclerListAdapter(itemOfLists);
-        recyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(new DividerItemDecoration(context, LinearLayoutManager.VERTICAL));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(recyclerListAdapter);
-
-        ParseQuery<ParseObject> query = ParseQuery.getQuery(className);
-        query.whereEqualTo(column1,value1);
-        query.orderByAscending("createdAt");
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> objects, ParseException e) {
-                if (e == null) {
-                    for (ParseObject topic : objects) {
-                        String text = topic.getString(key);
-                        if (text != null && !text.isEmpty()) {
-                            String classTopic = topic.getString(key);
-                            ItemOfList item = new ItemOfList(classTopic);
-                            itemOfLists.add(item);
-                            recyclerView.setAdapter(recyclerListAdapter);
-                            progressDialog.dismiss();
-                        }
-                    }
-                } else {
-                    e.printStackTrace();
-                }
-            }
-        });
-        recyclerListAdapter.notifyDataSetChanged();
+            RecyclerView recyclerView = activity.findViewById(resources);
+            RecyclerListAdapter recyclerListAdapter = new RecyclerListAdapter(itemOfLists);
+            recyclerView.setHasFixedSize(true);
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
+            recyclerView.setLayoutManager(layoutManager);
+            recyclerView.addItemDecoration(new DividerItemDecoration(context, orientation));
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+            recyclerView.setAdapter(recyclerListAdapter);
+            recyclerListAdapter.notifyDataSetChanged();
     }
 }
