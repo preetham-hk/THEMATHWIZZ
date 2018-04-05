@@ -75,5 +75,4 @@ public class AsyncTaskUpdateList extends AsyncTask<String, Void, List<ItemOfList
         progressDialog.dismiss();
         delegate.processFinish(result);
     }
-
 }
