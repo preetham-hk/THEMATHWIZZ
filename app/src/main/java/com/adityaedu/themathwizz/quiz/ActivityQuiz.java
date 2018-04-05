@@ -5,12 +5,14 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -22,6 +24,8 @@ import com.adityaedu.themathwizz.activities.HomeActivity;
 import com.adityaedu.themathwizz.fragments.AlertDialogFragment;
 import com.adityaedu.themathwizz.fragments.DialogPopupFragment;
 import com.adityaedu.themathwizz.fragments.ProgressDialogSpinner;
+import com.adityaedu.themathwizz.helpers.AsyncFile;
+import com.adityaedu.themathwizz.topics.TopicHelpers;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -92,8 +96,6 @@ public class ActivityQuiz extends AppCompatActivity {
         int QTrackSize = listItemPosition + 1;
         String QCSize = ((Integer)QTrackSize).toString();
 
-
-
         //Score
         final Integer score1 = bundle.getInt("Score");
         final Integer currentScore1 = bundle.getInt("currentScore");
@@ -122,7 +124,6 @@ public class ActivityQuiz extends AppCompatActivity {
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Quiz");
         query.whereEqualTo("subTopicName", subTopic);
-
 
         query.fromLocalDatastore();
         query.findInBackground(new FindCallback<ParseObject>() {
@@ -170,10 +171,22 @@ public class ActivityQuiz extends AppCompatActivity {
                                         quiz_option4.setVisibility(View.GONE);
                                     }
 
+                                    AsyncFile asyncFile = new AsyncFile();
+                                    Bitmap bitmap = asyncFile.doInBackground("Quiz","subTopicName", subTopic,"question",questionsList.get(listItemPosition),"QuizImageFile");
+
+                                    ImageView imageView = findViewById(R.id.quiz_questionImage);
+                                    if (bitmap != null){
+                                        imageView.setImageBitmap(bitmap);
+                                    }
+                                    else {
+                                        imageView.setVisibility(View.GONE);
+                                    }
+
                                     progressDialog.dismiss();
                                 } catch (Exception e3) {
                                     e3.getMessage();
                                 }
+
                                 quiz_CheckAnswer.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
@@ -227,7 +240,6 @@ public class ActivityQuiz extends AppCompatActivity {
                                             } else {
 
                                                 final Dialog dialogCorrect = DialogPopupFragment.showDialog(ActivityQuiz.this);
-
                                                 dialogCorrect.setContentView(R.layout.dialog_quiz_answer);
                                                 TextView correctText = dialogCorrect.findViewById(R.id.correctText);
                                                 String message = "Wrong";
@@ -278,7 +290,6 @@ public class ActivityQuiz extends AppCompatActivity {
                         Log.d("Score",""+TotalScore);
                         progressDialog.dismiss();
 
-
                         QuizHelper activityQuizScore = new QuizHelper();
                         activityQuizScore.saveToRecentActivity(subTopic , TotalScore);
 
@@ -305,7 +316,6 @@ public class ActivityQuiz extends AppCompatActivity {
         });
 
     }
-
 
     @Override
     public void onBackPressed() {
