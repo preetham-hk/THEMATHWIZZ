@@ -57,7 +57,7 @@ public class TopicHelpers {
 
     }
 
-    void LoadImageFile(Context context, final Activity activity, final int resources, String ClassName, String Column1, String Value1, String Column2, String Value2, final String Key){
+    public void LoadImageFile(final Activity activity, final int resources, String ClassName, String Column1, String Value1, String Column2, String Value2, final String Key){
         ParseQuery<ParseObject> query = ParseQuery.getQuery(ClassName);
         query.whereEqualTo(Column1, Value1);
         query.whereEqualTo(Column2, Value2);
@@ -67,6 +67,7 @@ public class TopicHelpers {
                 if(e==null){
                     for(ParseObject object : objects){
                         ParseFile file = (ParseFile) object.get(Key);
+                        Log.d("image1",""+file);
                         file.getDataInBackground(new GetDataCallback() {
                             @Override
                             public void done(byte[] data, ParseException e) {

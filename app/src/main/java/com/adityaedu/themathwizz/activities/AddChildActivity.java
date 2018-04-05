@@ -68,10 +68,8 @@ public class AddChildActivity extends AppCompatActivity implements View.OnClickL
         radioGroup = findViewById(R.id.gender_radioGroup);
         gender = ((RadioButton) findViewById(radioGroup.getCheckedRadioButtonId())).getText().toString();
 
-
         //class Select
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, SPINNERClass);
-
 
         materialBetterSpinner = findViewById(R.id.class_Spinner);
         materialBetterSpinner.setAdapter(arrayAdapter);

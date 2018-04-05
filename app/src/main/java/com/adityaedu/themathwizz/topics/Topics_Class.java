@@ -2,13 +2,16 @@ package com.adityaedu.themathwizz.topics;
 
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.adityaedu.themathwizz.R;
+import com.adityaedu.themathwizz.helpers.AsyncFile;
 
 
 /**
@@ -36,13 +39,11 @@ public class Topics_Class extends AppCompatActivity {
         listView = findViewById(R.id.listView_topics_class1);
 
         //Retrieve Topics
-
         TopicHelpers topicHelpers = new TopicHelpers();
         topicHelpers.LoadQuery(this, this, R.id.listView_topics_class1, "Topics", "Class", className, "Class", className, "TopicName");
 
         //Retrieve Image
-        topicHelpers.LoadImageFile(this, this, R.id.class1_imageView, "ImageFiles", "Class", className, "Class", className, "classImage");
-
+        topicHelpers.LoadImageFile( this, R.id.class1_imageView, "ImageFiles", "Class", className, "Class", className, "classImage");
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -71,6 +72,7 @@ public class Topics_Class extends AppCompatActivity {
 
             }
         });
+
     }
 
     private void showSubTopics(int position) {
