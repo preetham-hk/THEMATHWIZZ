@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.adityaedu.themathwizz.R;
 import com.adityaedu.themathwizz.fragments.ProgressDialogSpinner;
 import com.adityaedu.themathwizz.quiz.ActivityQuiz;
+import com.adityaedu.themathwizz.quiz.QuizAlgorithm;
 import com.adityaedu.themathwizz.quiz.QuizHelper;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
@@ -66,12 +67,13 @@ public class Subtopics_Class extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String selectedSubTopicName = (listView.getItemAtPosition(position)).toString();
                 Log.d("selectedSubTopicName",""+selectedSubTopicName);
-                Intent intent = new Intent(getApplicationContext(), ActivityQuiz.class);
+                //Intent intent = new Intent(getApplicationContext(), ActivityQuiz.class);
+                Intent intent = new Intent(getApplicationContext(), QuizAlgorithm.class);
                 intent.putExtra("subTopic",selectedSubTopicName);
                 intent.putExtra("className",className);
+                intent.putExtra("level",0);
                 startActivity(intent);
             }
         });
-
     }
 }

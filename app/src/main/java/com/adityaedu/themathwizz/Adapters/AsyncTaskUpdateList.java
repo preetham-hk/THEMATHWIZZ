@@ -28,7 +28,6 @@ public class AsyncTaskUpdateList extends AsyncTask<String, Void, List<ItemOfList
     }
 
     private AsyncResponse delegate = null;
-
     public AsyncTaskUpdateList( String className, String column, String value, String key1, Context context,AsyncResponse delegate) {
         this.className = className;
         this.column = column;

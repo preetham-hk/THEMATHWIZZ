@@ -119,6 +119,12 @@
                 android:layout_marginRight="40dp"
                 android:text="Check" />
 
+            <TextView
+                android:id="@+id/quiz_difficulty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal|center"/>
+
         </RadioGroup>
 
     </LinearLayout>

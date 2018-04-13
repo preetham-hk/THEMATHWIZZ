@@ -38,7 +38,7 @@ import java.util.List;
  *
  */
 
-public class ActivityQuiz extends AppCompatActivity {
+public class QuizAlgorithm extends AppCompatActivity {
 
     ArrayList<String> questionsList = new ArrayList<>();
     ArrayList<String> optionList1 = new ArrayList<>();
@@ -46,7 +46,6 @@ public class ActivityQuiz extends AppCompatActivity {
     ArrayList<String> optionList3 = new ArrayList<>();
     ArrayList<String> optionList4 = new ArrayList<>();
     ArrayList<String> answerList = new ArrayList<>();
-    ArrayList<String>  objectIdList= new ArrayList<>();
 
 
     TextView Question_textView;
@@ -60,6 +59,7 @@ public class ActivityQuiz extends AppCompatActivity {
     TextView quiz_QCSize_TextView;
     TextView quiz_QSize_TextView;
     RelativeLayout relativeLayout;
+    TextView quiz_difficulty;
 
     String Question = "question";
     String Option1 = "option1";
@@ -71,8 +71,10 @@ public class ActivityQuiz extends AppCompatActivity {
     ProgressDialog progressDialog;
 
     int currentValue =0;
+    int listItemPosition;
 
     Context context;
+    Dialog dialogCorrect;
 
 
     @Override
@@ -83,22 +85,46 @@ public class ActivityQuiz extends AppCompatActivity {
         context = this;
 
         Bundle bundle = getIntent().getExtras();
-        final Integer passedValue = bundle.getInt("currentValue");
+        final Integer passedValueForL0 = bundle.getInt("currentValueForL0");
+        final Integer passedValueForL1 = bundle.getInt("currentValueForL1");
+        final Integer passedValueForL2 = bundle.getInt("currentValueForL2");
         final String subTopic = bundle.getString("subTopic");
-        String className = bundle.getString("className");
+        final String className = bundle.getString("className");
+        final int level = bundle.getInt("Level");
+
 
         Log.d("className",""+className);
 
-        final int listItemPosition=passedValue+ currentValue;
-        Log.d("listItemPosition",""+listItemPosition);
-        int QTrackSize = listItemPosition + 1;
-        String QCSize = ((Integer)QTrackSize).toString();
+        final int easyListItemPosition=passedValueForL0+ currentValue;
+        Log.d("listItemPosition_E",""+easyListItemPosition);
+        final int mediumListItemPosition= passedValueForL1 + currentValue;
+        Log.d("listItemPosition_M",""+mediumListItemPosition);
+        final int hardListItemPosition = passedValueForL2 + currentValue;
+        Log.d("listItemPosition_H",""+hardListItemPosition);
+
+        //int QTrackSize = listItemPosition + 1;
+        //String QCSize = ((Integer)QTrackSize).toString();
+
+        quiz_difficulty = findViewById(R.id.quiz_difficulty);
 
         //Score
         final Integer score1 = bundle.getInt("Score");
         final Integer currentScore1 = bundle.getInt("currentScore");
         final int TotalScore = currentScore1 + score1;
         Log.d("Total Score", "Current Score="+TotalScore);
+
+
+        //Easy Questions
+        final Integer EasyQuestion = bundle.getInt("EasyQ");
+        Integer CurrentEasyQuestion = bundle.getInt("TotalEasyQuestion");
+        final int TotalEasyQuestion = EasyQuestion + CurrentEasyQuestion;
+        Log.d("TotalEasyQuestion",""+TotalEasyQuestion);
+
+        //Score for Easy Questions
+        final Integer EasyQScore = bundle.getInt("EasyQS");
+        Integer CurrentEasyScore = bundle.getInt("TotalEasyQScore");
+        final int TotalEasyScore = EasyQScore + CurrentEasyScore;
+        Log.d("TotalEasyQuestionScore",""+TotalEasyScore);
 
         Log.d("extra",""+subTopic);
         quiz_topicName = findViewById(R.id.quiz_Topic_TextView);
@@ -113,26 +139,42 @@ public class ActivityQuiz extends AppCompatActivity {
         quiz_QSize_TextView =findViewById(R.id.quiz_QSize_TextView);
 
         relativeLayout = findViewById(R.id.QTrack_layout);
-
-        quiz_QSize_TextView.setText(QCSize);
-
+        //quiz_QSize_TextView.setText(QCSize);
         quiz_topicName.setText(subTopic);
 
+        String easy = "Easy";
+        String medium = "Medium";
+        String hard = "Hard";
+
+        //itemPosition for level
+        if (level == 0){
+            listItemPosition = easyListItemPosition;
+            quiz_difficulty.setText(easy);
+        }
+
+        else if (level == 1){
+            listItemPosition = mediumListItemPosition;
+            quiz_difficulty.setText(medium);
+        }
+        else if(level == 2){
+            listItemPosition = hardListItemPosition;
+            quiz_difficulty.setText(hard);
+        }
+
+        Log.d("listItemPosition_A",""+listItemPosition);
+
         progressDialog = ProgressDialogSpinner.showProgressDialog(this,"Loading Questions");
-
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Quiz");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("TestingQuiz");
         query.whereEqualTo("subTopicName", subTopic);
+        query.whereEqualTo("Level",level);
 
-        query.fromLocalDatastore();
+        //query.fromLocalDataStore();
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> questions, ParseException e) {
 
                 if (questions.size() > 0) {
                     Log.d("size", "" + questions.size());
-                    String QuizSize = ((Integer) questions.size()).toString();
-                    quiz_QCSize_TextView.setText(QuizSize);
-
                     if (questions.size() > listItemPosition) {
                         if (e == null) {
                             for (ParseObject question : questions) {
@@ -142,12 +184,7 @@ public class ActivityQuiz extends AppCompatActivity {
                                 optionList3.add(question.getString(Option3));
                                 optionList4.add(question.getString(Option4));
                                 answerList.add(question.getString(Answer));
-                                objectIdList.add(question.getString("objectId"));
-
-                                Log.d("objects",""+objectIdList);
-
                                 try {
-
                                     Question_textView.setText(questionsList.get(listItemPosition));
                                     quiz_option1.setText(optionList1.get(listItemPosition));
                                     quiz_option2.setText(optionList2.get(listItemPosition));
@@ -163,7 +200,7 @@ public class ActivityQuiz extends AppCompatActivity {
                                     }
 
                                     if (option4 != null && !option4.isEmpty()){
-                                    quiz_option4.setText(optionList4.get(listItemPosition));
+                                        quiz_option4.setText(optionList4.get(listItemPosition));
                                     }
                                     else {
                                         quiz_option4.setVisibility(View.GONE);
@@ -200,7 +237,7 @@ public class ActivityQuiz extends AppCompatActivity {
                                             //
                                             if (selectedOption.equals(Answer)) {
                                                 //Dialog
-                                                final Dialog dialogCorrect = DialogPopupFragment.showDialog(ActivityQuiz.this);
+                                                final Dialog dialogCorrect = DialogPopupFragment.showDialog(QuizAlgorithm.this);
                                                 dialogCorrect.setContentView(R.layout.dialog_quiz_answer);
                                                 TextView correctText = dialogCorrect.findViewById(R.id.correctText);
                                                 String message = "Correct";
@@ -213,31 +250,39 @@ public class ActivityQuiz extends AppCompatActivity {
                                                 buttonNext.setOnClickListener(new View.OnClickListener() {
                                                     @Override
                                                     public void onClick(View v) {
+                                                        Log.d("Level",""+level);
+                                                        if(level == 0){
+                                                            startNextQuestion(subTopic,className,level,1,easyListItemPosition,"currentValueForL0",
+                                                                    "currentValueForL1", passedValueForL1,"currentValueForL2",passedValueForL2,
+                                                                    1,TotalScore,
+                                                                    1,TotalEasyQuestion,
+                                                                    1,TotalEasyScore);
+                                                            dialogCorrect.dismiss();
+                                                        }
+                                                        else  if (level == 1){
+                                                            startNextQuestion(subTopic,className,level,1,mediumListItemPosition,"currentValueForL1",
+                                                                    "currentValueForL0", passedValueForL0,"currentValueForL2",passedValueForL2,
+                                                                    1,TotalScore,
+                                                                    0,TotalEasyQuestion,
+                                                                    0,TotalEasyScore);
+                                                            dialogCorrect.dismiss();
+                                                        }
+                                                        else  if (level == 2){
 
-                                                        progressDialog = ProgressDialogSpinner.showProgressDialog(ActivityQuiz.this, "Please Wait");
-                                                        Intent intent = new Intent(getApplicationContext(), ActivityQuiz.class);
-                                                        intent.putExtra("subTopic", subTopic);
-                                                        currentValue++;
-                                                        Log.d("value of passedValue", "" + currentValue);
-                                                        int c3 = currentValue + listItemPosition;
-                                                        Log.d("value of c3", "" + c3);
-                                                        intent.putExtra("currentValue", c3);
+                                                            startNextQuestion(subTopic,className,level,0,hardListItemPosition,"currentValueForL2",
+                                                                    "currentValueForL0", passedValueForL0,"currentValueForL1",passedValueForL1,
+                                                                    1,TotalScore,
+                                                                    0,TotalEasyQuestion,
+                                                                    0,TotalEasyScore);
+                                                            dialogCorrect.dismiss();
 
-                                                        //Score
-                                                        int correctAnswer = 1;
-                                                        intent.putExtra("Score", correctAnswer);
-                                                        intent.putExtra("currentScore", TotalScore);
-
-                                                        startActivity(intent);
-                                                        progressDialog.dismiss();
-                                                        finish();
-                                                        dialogCorrect.dismiss();
+                                                        }
                                                     }
                                                 });
 
                                             } else {
 
-                                                final Dialog dialogCorrect = DialogPopupFragment.showDialog(ActivityQuiz.this);
+                                                dialogCorrect = DialogPopupFragment.showDialog(QuizAlgorithm.this);
                                                 dialogCorrect.setContentView(R.layout.dialog_quiz_answer);
                                                 TextView correctText = dialogCorrect.findViewById(R.id.correctText);
                                                 String message = "Wrong";
@@ -252,22 +297,36 @@ public class ActivityQuiz extends AppCompatActivity {
                                                 buttonNext.setOnClickListener(new View.OnClickListener() {
                                                     @Override
                                                     public void onClick(View v) {
-                                                        progressDialog = ProgressDialogSpinner.showProgressDialog(ActivityQuiz.this, "Please Wait");
-                                                        Intent intent = new Intent(getApplicationContext(), ActivityQuiz.class);
-                                                        intent.putExtra("subTopic", subTopic);
-                                                        currentValue++;
-                                                        Log.d("value of passedValue", "" + currentValue);
-                                                        int c3 = currentValue + listItemPosition;
-                                                        Log.d("value of c3", "" + c3);
-                                                        intent.putExtra("currentValue", c3);
-                                                        //Score
-                                                        int wrongAnswer = 0;
-                                                        intent.putExtra("Score", wrongAnswer);
-                                                        intent.putExtra("currentScore", TotalScore);
-                                                        startActivity(intent);
-                                                        progressDialog.dismiss();
-                                                        finish();
-                                                        dialogCorrect.dismiss();
+                                                        progressDialog = ProgressDialogSpinner.showProgressDialog(QuizAlgorithm.this, "Please Wait");
+                                                        if(level == 0){
+                                                            startNextQuestion(subTopic,className,level,0,easyListItemPosition, "currentValueForL0",
+                                                                    "currentValueForL1",passedValueForL1,"currentValueForL2",passedValueForL2,
+                                                                    0,TotalScore,
+                                                                    1,TotalEasyQuestion,
+                                                                    0,TotalEasyScore);
+                                                            dialogCorrect.dismiss();
+
+                                                        }
+                                                        else  if (level == 1){
+                                                            startNextQuestion(subTopic,className,level,-1,mediumListItemPosition, "currentValueForL1",
+                                                                    "currentValueForL0", passedValueForL0, "currentValueForL2",passedValueForL2,
+                                                                    0,TotalScore,
+                                                                    0,TotalEasyQuestion,
+                                                                    0,TotalEasyScore);
+                                                            dialogCorrect.dismiss();
+
+                                                        }
+                                                        else  if (level == 2){
+
+                                                            startNextQuestion(subTopic,className,level,-1,hardListItemPosition, "currentValueForL2",
+                                                                    "currentValueForL0", passedValueForL0, "currentValueForL1",passedValueForL1,
+                                                                    0,TotalScore,
+                                                                    0,TotalEasyQuestion,
+                                                                    0,TotalEasyScore);
+                                                            dialogCorrect.dismiss();
+
+                                                        }
+
                                                     }
                                                 });
 
@@ -292,6 +351,9 @@ public class ActivityQuiz extends AppCompatActivity {
                         activityQuizScore.saveToRecentActivity(subTopic , TotalScore);
 
                         String noContent = " Congratulation, You completed the Quiz. Score is " + TotalScore;
+                        Log.d("EndTotalScore",""+TotalScore);
+                        Log.d("EndTotalEasyQ",""+ TotalEasyQuestion);
+                        Log.d("EndTotalEasyQS",""+TotalEasyScore);
                         Question_textView.setText(noContent);
                         quiz_optionGroup.setVisibility(View.GONE);
                         relativeLayout.setVisibility(View.GONE);
@@ -300,7 +362,7 @@ public class ActivityQuiz extends AppCompatActivity {
                     }
 
                 }
-            else {
+                else {
                     Log.d("size",""+questions.size());
                     String noContent = "Currently content is not available for this topic";
                     Question_textView.setText(noContent);
@@ -315,10 +377,48 @@ public class ActivityQuiz extends AppCompatActivity {
 
     }
 
+    private void startNextQuestion(String subTopic, String className, int level, int levelValue, int levelItemList, String currentValueForLC,
+                                   String currentValueForLP,int passedValueFor1 , String currentValueForLN, int passedValueFor2,
+                                   int score, int TotalScore,
+                                   int EasyQ, int TotalEasyQ,
+                                   int EasyQS, int TotalEasyQS
+                                    ){
+        progressDialog = ProgressDialogSpinner.showProgressDialog(QuizAlgorithm.this, "Please Wait");
+        Intent intent = new Intent(getApplicationContext(), QuizAlgorithm.class);
+        intent.putExtra("subTopic", subTopic);
+        intent.putExtra("className",className);
+        int NextLevel = level + levelValue;
+        intent.putExtra("Level",NextLevel);
+        currentValue++;
+        int c3 = currentValue + levelItemList;
+        Log.d("levelItem",""+levelItemList);
+        Log.d("value of c3", "" + c3);
+        intent.putExtra(currentValueForLC, c3);
+        Log.d("currentValueForLC", ""+c3);
+        intent.putExtra(currentValueForLP,passedValueFor1);
+        Log.d("currentValueForLC", ""+passedValueFor1);
+        intent.putExtra(currentValueForLN,passedValueFor2);
+        Log.d("currentValueForLC", ""+passedValueFor2);
+
+        //Score
+        intent.putExtra("Score", score);
+        intent.putExtra("currentScore", TotalScore);
+
+        //Score for Level0
+        intent.putExtra("EasyQ",EasyQ);
+        intent.putExtra("TotalEasyQuestion",TotalEasyQ);
+        intent.putExtra("EasyQS",EasyQS);
+        intent.putExtra("TotalEasyQScore",TotalEasyQS);
+
+        startActivity(intent);
+        progressDialog.dismiss();
+        finish();
+    }
+
     @Override
     public void onBackPressed() {
 
-        AlertDialogFragment.showAlertDialog(ActivityQuiz.this, "Cancel", "Yes", "Do you want to end the Quiz?",
+        AlertDialogFragment.showAlertDialog(QuizAlgorithm.this, "Cancel", "Yes", "Do you want to end the Quiz?",
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

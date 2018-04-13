@@ -11,6 +11,7 @@ import com.parse.ParseQuery;
 import java.util.List;
 
 public class AsyncFile extends AsyncTask <String,Void,Bitmap> {
+
     @Override
     public Bitmap doInBackground(String... params) {
         Bitmap bitmapImage = null;
@@ -43,12 +44,10 @@ public class AsyncFile extends AsyncTask <String,Void,Bitmap> {
                 else {
                     return null;
                 }
-
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
        return bitmapImage;
     }
-
 }

@@ -26,10 +26,8 @@
             android:value="@string/back4app_client_key" />
 
         <activity android:name=".activities.HomeActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -57,14 +55,11 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-
         <activity android:name=".activities.AddChildActivity" />
         <activity
             android:name=".activities.MainActivity"
@@ -74,6 +69,7 @@
         <activity android:name=".activities.ChildHomeActivity" />
         <activity android:name=".quiz.ActivityQuiz" />
         <activity android:name=".quiz.RecentQuiz" />
-
+        <activity android:name=".quiz.QuizAlgorithm"/>
     </application>
+
 </manifest>

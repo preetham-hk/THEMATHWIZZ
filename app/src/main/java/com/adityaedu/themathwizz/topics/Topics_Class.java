@@ -49,9 +49,7 @@ public class Topics_Class extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0) {
-
                     showSubTopics(position);
-
                 } else if (position == 1) {
                     showSubTopics(position);
                 } else if (position == 2) {
@@ -69,10 +67,8 @@ public class Topics_Class extends AppCompatActivity {
                 } else if (position == 8) {
                     showSubTopics(position);
                 }
-
             }
         });
-
     }
 
     private void showSubTopics(int position) {
