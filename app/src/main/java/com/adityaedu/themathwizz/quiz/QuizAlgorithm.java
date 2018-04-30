@@ -92,7 +92,6 @@ public class QuizAlgorithm extends AppCompatActivity {
         final String className = bundle.getString("className");
         final int level = bundle.getInt("Level");
 
-
         Log.d("className",""+className);
 
         final int easyListItemPosition=passedValueForL0+ currentValue;
@@ -125,6 +124,29 @@ public class QuizAlgorithm extends AppCompatActivity {
         Integer CurrentEasyScore = bundle.getInt("TotalEasyQScore");
         final int TotalEasyScore = EasyQScore + CurrentEasyScore;
         Log.d("TotalEasyQuestionScore",""+TotalEasyScore);
+
+        //Medium Question
+        final Integer MediumQuestion = bundle.getInt("MediumQ");
+        Integer currentMediumQuestion = bundle.getInt("TotalMediumQuestion");
+        final int TotalMediumQuestion = MediumQuestion + currentMediumQuestion;
+        Log.d("TotalMediumQuestion",""+TotalMediumQuestion);
+
+        //Score for Medium Questions
+        final Integer MediumQScore = bundle.getInt("MediumQS");
+        Integer currentMediumScore = bundle.getInt("TotalMediumQScore");
+        final int TotalMediumScore = MediumQScore + currentMediumScore;
+        Log.d("TotalMediumQScore",""+TotalMediumScore);
+
+        //Hard Question
+        final Integer HardQuestion = bundle.getInt("HardQ");
+        Integer currentHardQuestion = bundle.getInt("TotalHardQuestion");
+        final int TotalHardQuestion = HardQuestion + currentHardQuestion;
+        Log.d("TotalHardQuestion",""+TotalHardQuestion);
+
+        //Score for Hard Questions
+        final Integer HardQScore = bundle.getInt("HardQS");
+        Integer currentHardScore = bundle.getInt("TotalHardQScore");
+        final  int TotalHardScore = HardQScore + currentHardScore;
 
         Log.d("extra",""+subTopic);
         quiz_topicName = findViewById(R.id.quiz_Topic_TextView);
@@ -256,7 +278,14 @@ public class QuizAlgorithm extends AppCompatActivity {
                                                                     "currentValueForL1", passedValueForL1,"currentValueForL2",passedValueForL2,
                                                                     1,TotalScore,
                                                                     1,TotalEasyQuestion,
-                                                                    1,TotalEasyScore);
+                                                                    1,TotalEasyScore,
+
+                                                                    0, TotalMediumQuestion,
+                                                                    0, TotalMediumScore,
+
+                                                                    0,TotalHardQuestion,
+                                                                    0,TotalHardScore
+                                                                    );
                                                             dialogCorrect.dismiss();
                                                         }
                                                         else  if (level == 1){
@@ -264,7 +293,13 @@ public class QuizAlgorithm extends AppCompatActivity {
                                                                     "currentValueForL0", passedValueForL0,"currentValueForL2",passedValueForL2,
                                                                     1,TotalScore,
                                                                     0,TotalEasyQuestion,
-                                                                    0,TotalEasyScore);
+                                                                    0,TotalEasyScore,
+
+                                                                    1, TotalMediumQuestion,
+                                                                    1, TotalMediumScore,
+
+                                                                    0,TotalHardQuestion,
+                                                                    0,TotalHardScore);
                                                             dialogCorrect.dismiss();
                                                         }
                                                         else  if (level == 2){
@@ -273,7 +308,13 @@ public class QuizAlgorithm extends AppCompatActivity {
                                                                     "currentValueForL0", passedValueForL0,"currentValueForL1",passedValueForL1,
                                                                     1,TotalScore,
                                                                     0,TotalEasyQuestion,
-                                                                    0,TotalEasyScore);
+                                                                    0,TotalEasyScore,
+
+                                                                    0, TotalMediumQuestion,
+                                                                    0, TotalMediumScore,
+
+                                                                    1,TotalHardQuestion,
+                                                                    1,TotalHardScore);
                                                             dialogCorrect.dismiss();
 
                                                         }
@@ -303,7 +344,13 @@ public class QuizAlgorithm extends AppCompatActivity {
                                                                     "currentValueForL1",passedValueForL1,"currentValueForL2",passedValueForL2,
                                                                     0,TotalScore,
                                                                     1,TotalEasyQuestion,
-                                                                    0,TotalEasyScore);
+                                                                    0,TotalEasyScore,
+
+                                                                    0, TotalMediumQuestion,
+                                                                    0, TotalMediumScore,
+
+                                                                    0,TotalHardQuestion,
+                                                                    0,TotalHardScore);
                                                             dialogCorrect.dismiss();
 
                                                         }
@@ -312,7 +359,13 @@ public class QuizAlgorithm extends AppCompatActivity {
                                                                     "currentValueForL0", passedValueForL0, "currentValueForL2",passedValueForL2,
                                                                     0,TotalScore,
                                                                     0,TotalEasyQuestion,
-                                                                    0,TotalEasyScore);
+                                                                    0,TotalEasyScore,
+
+                                                                    1, TotalMediumQuestion,
+                                                                    0, TotalMediumScore,
+
+                                                                    0,TotalHardQuestion,
+                                                                    0,TotalHardScore);
                                                             dialogCorrect.dismiss();
 
                                                         }
@@ -322,7 +375,13 @@ public class QuizAlgorithm extends AppCompatActivity {
                                                                     "currentValueForL0", passedValueForL0, "currentValueForL1",passedValueForL1,
                                                                     0,TotalScore,
                                                                     0,TotalEasyQuestion,
-                                                                    0,TotalEasyScore);
+                                                                    0,TotalEasyScore,
+
+                                                                    0, TotalMediumQuestion,
+                                                                    0, TotalMediumScore,
+
+                                                                    1,TotalHardQuestion,
+                                                                    0,TotalHardScore);
                                                             dialogCorrect.dismiss();
 
                                                         }
@@ -341,7 +400,7 @@ public class QuizAlgorithm extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     } else {
-
+                        /*
                         Log.d("size", "" + questions.size());
                         Log.d("Sub topic",""+subTopic);
                         Log.d("Score",""+TotalScore);
@@ -349,16 +408,36 @@ public class QuizAlgorithm extends AppCompatActivity {
 
                         QuizHelper activityQuizScore = new QuizHelper();
                         activityQuizScore.saveToRecentActivity(subTopic , TotalScore);
+                        */
+                        //progressDialog = ProgressDialogSpinner.showProgressDialog(getApplicationContext(),"Loading Scores");
 
-                        String noContent = " Congratulation, You completed the Quiz. Score is " + TotalScore;
-                        Log.d("EndTotalScore",""+TotalScore);
-                        Log.d("EndTotalEasyQ",""+ TotalEasyQuestion);
-                        Log.d("EndTotalEasyQS",""+TotalEasyScore);
+                        String noContent = "Quiz Completed" ;
+
                         Question_textView.setText(noContent);
                         quiz_optionGroup.setVisibility(View.GONE);
                         relativeLayout.setVisibility(View.GONE);
                         progressDialog.dismiss();
 
+                        Log.d("EndTotalScore",""+TotalScore);
+                        Log.d("EndTotalEasyQ",""+ TotalEasyQuestion);
+                        Log.d("EndTotalEasyQS",""+TotalEasyScore);
+                        Log.d("EndTotalMediumQ",""+TotalMediumQuestion);
+                        Log.d("EndTotalMediumQS",""+TotalMediumScore);
+                        Log.d("EndTotalHardQ",""+TotalHardQuestion);
+                        Log.d("EndTotalHardQS",""+TotalHardScore);
+
+                        Intent intent = new Intent(getApplicationContext(),QuizScore.class);
+                        intent.putExtra("TotalScore",TotalScore);
+                        intent.putExtra("subTopic",subTopic);
+                        intent.putExtra("TotalEasyQuestion",TotalEasyQuestion);
+                        intent.putExtra("TotalEasyScore",TotalEasyScore);
+                        intent.putExtra("TotalMediumQuestion",TotalMediumQuestion);
+                        intent.putExtra("TotalMediumScore",TotalMediumScore);
+                        intent.putExtra("TotalHardQuestion",TotalHardQuestion);
+                        intent.putExtra("TotalHardScore",TotalHardScore);
+                        startActivity(intent);
+                        progressDialog.dismiss();
+                        finish();
                     }
 
                 }
@@ -381,7 +460,13 @@ public class QuizAlgorithm extends AppCompatActivity {
                                    String currentValueForLP,int passedValueFor1 , String currentValueForLN, int passedValueFor2,
                                    int score, int TotalScore,
                                    int EasyQ, int TotalEasyQ,
-                                   int EasyQS, int TotalEasyQS
+                                   int EasyQS, int TotalEasyQS,
+
+                                   int MediumQ, int TotalMediumQ,
+                                   int MediumQS, int TotalMediumQS,
+
+                                   int HardQ, int TotalHardQ,
+                                   int HardQS, int TotalHardQS
                                     ){
         progressDialog = ProgressDialogSpinner.showProgressDialog(QuizAlgorithm.this, "Please Wait");
         Intent intent = new Intent(getApplicationContext(), QuizAlgorithm.class);
@@ -409,6 +494,18 @@ public class QuizAlgorithm extends AppCompatActivity {
         intent.putExtra("TotalEasyQuestion",TotalEasyQ);
         intent.putExtra("EasyQS",EasyQS);
         intent.putExtra("TotalEasyQScore",TotalEasyQS);
+
+        //Score for Level1
+        intent.putExtra("MediumQ",MediumQ);
+        intent.putExtra("TotalMediumQuestion",TotalMediumQ);
+        intent.putExtra("MediumQS",MediumQS);
+        intent.putExtra("TotalMediumQScore", TotalMediumQS);
+
+        //Score for Level2
+        intent.putExtra("HardQ",HardQ);
+        intent.putExtra("TotalHardQuestion",TotalHardQ);
+        intent.putExtra("HardQS",HardQS);
+        intent.putExtra("TotalHardQScore",TotalHardQS);
 
         startActivity(intent);
         progressDialog.dismiss();

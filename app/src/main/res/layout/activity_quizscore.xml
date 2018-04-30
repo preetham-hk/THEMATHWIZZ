@@ -39,8 +39,59 @@
             android:id="@+id/Score_total_TextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="40dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center|center_horizontal"
+            android:textColor="@color/grey"
+            android:textSize="18sp" />
+        <TextView
+            android:id="@+id/EasyQ_TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center|center_horizontal"
+            android:textColor="@color/grey"
+            android:textSize="18sp"/>
+        <TextView
+            android:id="@+id/EasyQS_TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:gravity="center|center_horizontal"
+            android:textColor="@color/grey"
+            android:textSize="18sp" />
+        <TextView
+            android:id="@+id/MediumQ_TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center|center_horizontal"
+            android:textColor="@color/grey"
+            android:textSize="18sp"/>
+        <TextView
+            android:id="@+id/MediumQS_TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:gravity="center|center_horizontal"
+            android:textColor="@color/grey"
+            android:textSize="18sp" />
+        <TextView
+            android:id="@+id/HardQ_TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center|center_horizontal"
+            android:textColor="@color/grey"
+            android:textSize="18sp"/>
+        <TextView
+            android:id="@+id/HardQS_TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:gravity="center|center_horizontal"
             android:textColor="@color/grey"
             android:textSize="18sp" />

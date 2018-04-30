@@ -70,6 +70,7 @@
         <activity android:name=".quiz.ActivityQuiz" />
         <activity android:name=".quiz.RecentQuiz" />
         <activity android:name=".quiz.QuizAlgorithm"/>
+        <activity android:name=".quiz.QuizScore"/>
     </application>
 
 </manifest>
