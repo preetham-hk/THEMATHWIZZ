@@ -15,7 +15,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,9 +55,6 @@ public class QuizAlgorithm extends AppCompatActivity {
     AppCompatButton quiz_CheckAnswer;
     RadioGroup quiz_optionGroup;
     TextView quiz_topicName;
-    TextView quiz_QCSize_TextView;
-    TextView quiz_QSize_TextView;
-    RelativeLayout relativeLayout;
     TextView quiz_difficulty;
 
     String Question = "question";
@@ -157,16 +153,12 @@ public class QuizAlgorithm extends AppCompatActivity {
         quiz_option4 = findViewById(R.id.quiz_option4);
         quiz_CheckAnswer= findViewById(R.id.quiz_CheckAnswer);
         quiz_optionGroup = findViewById(R.id.quiz_optionGroup);
-        quiz_QCSize_TextView = findViewById(R.id.quiz_QCSize_TextView);
-        quiz_QSize_TextView =findViewById(R.id.quiz_QSize_TextView);
-
-        relativeLayout = findViewById(R.id.QTrack_layout);
         //quiz_QSize_TextView.setText(QCSize);
         quiz_topicName.setText(subTopic);
 
-        String easy = "Easy";
-        String medium = "Medium";
-        String hard = "Hard";
+        String easy = "Beginner";
+        String medium = "Intermediate";
+        String hard = "Advanced";
 
         //itemPosition for level
         if (level == 0){
@@ -415,7 +407,6 @@ public class QuizAlgorithm extends AppCompatActivity {
 
                         Question_textView.setText(noContent);
                         quiz_optionGroup.setVisibility(View.GONE);
-                        relativeLayout.setVisibility(View.GONE);
                         progressDialog.dismiss();
 
                         Log.d("EndTotalScore",""+TotalScore);
@@ -446,7 +437,6 @@ public class QuizAlgorithm extends AppCompatActivity {
                     String noContent = "Currently content is not available for this topic";
                     Question_textView.setText(noContent);
                     quiz_optionGroup.setVisibility(View.GONE);
-                    relativeLayout.setVisibility(View.GONE);
                     progressDialog.dismiss();
                 }
             }

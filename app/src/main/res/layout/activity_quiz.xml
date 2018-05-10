@@ -123,51 +123,13 @@
                 android:id="@+id/quiz_difficulty"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:gravity="center_horizontal|center"/>
 
         </RadioGroup>
 
     </LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/QTrack_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center|center_horizontal"
-        android:orientation="horizontal"
-        android:layout_below="@+id/option_LinearLayout">
-
-        <TextView
-            android:id="@+id/quiz_QSize_TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/quiz_QM_TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/quiz_QSize_TextView"
-            android:paddingLeft="6dp"
-            android:paddingRight="6dp"
-            android:layout_marginBottom="20dp"
-            android:text="/"
-            android:textSize="20sp">
-
-        </TextView>
-
-
-        <TextView
-            android:id="@+id/quiz_QCSize_TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/quiz_QM_TextView"
-            android:textSize="20sp">
-        </TextView>
-
-    </RelativeLayout>
 
 </RelativeLayout>
 </ScrollView>

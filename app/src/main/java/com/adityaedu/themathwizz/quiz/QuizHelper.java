@@ -20,7 +20,7 @@ import java.util.List;
 public class QuizHelper {
     private String username = ParseUser.getCurrentUser().getUsername();
 
-    void saveToRecentActivity(final String subTopic, final Integer Score) {
+    void saveToRecentActivity(final String subTopic, final Integer Score, final String Mastery) {
 
         final ParseObject RecentActivity = new ParseObject("RecentActivity");
 
@@ -32,6 +32,7 @@ public class QuizHelper {
         RecentActivity.put("Activity1", subTopic);
         try {
             RecentActivity.put("Scores", Score);
+            RecentActivity.put("Mastery",Mastery);
         } catch (Exception e) {
             e.printStackTrace();
         }

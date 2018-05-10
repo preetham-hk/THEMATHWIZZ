@@ -109,10 +109,6 @@ public class ActivityQuiz extends AppCompatActivity {
         quiz_option4 = findViewById(R.id.quiz_option4);
         quiz_CheckAnswer= findViewById(R.id.quiz_CheckAnswer);
         quiz_optionGroup = findViewById(R.id.quiz_optionGroup);
-        quiz_QCSize_TextView = findViewById(R.id.quiz_QCSize_TextView);
-        quiz_QSize_TextView =findViewById(R.id.quiz_QSize_TextView);
-
-        relativeLayout = findViewById(R.id.QTrack_layout);
 
         quiz_QSize_TextView.setText(QCSize);
 
@@ -288,8 +284,9 @@ public class ActivityQuiz extends AppCompatActivity {
                         Log.d("Score",""+TotalScore);
                         progressDialog.dismiss();
 
-                        QuizHelper activityQuizScore = new QuizHelper();
-                        activityQuizScore.saveToRecentActivity(subTopic , TotalScore);
+                        //QuizHelper activityQuizScore = new QuizHelper();
+                        //String Mastery = "mastery";
+                        //activityQuizScore.saveToRecentActivity(subTopic , TotalScore, Mastery);
 
                         String noContent = " Congratulation, You completed the Quiz. Score is " + TotalScore;
                         Question_textView.setText(noContent);

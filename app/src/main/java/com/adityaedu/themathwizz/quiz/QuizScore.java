@@ -20,6 +20,8 @@ public class QuizScore extends AppCompatActivity {
             HardQ_TextView,
             HardQS_TextView;
 
+    String mastery;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,9 +47,30 @@ public class QuizScore extends AppCompatActivity {
         HardQ_TextView= findViewById(R.id.HardQ_TextView);
         HardQS_TextView = findViewById(R.id.HardQS_TextView);
 
+        float CompleteQuestions = TotalEasyQuestion + TotalMediumQuestion + TotalHardQuestion;
+        float CompleteScore = TotalEasyScore + TotalMediumScore + TotalHardScore ;
+
+        float percentage =  (CompleteScore / CompleteQuestions) * 100;
+
+
+        if (percentage == 100.0){
+            mastery = "Expert";
+        }
+        else if (percentage <100.0 && percentage >= 50.0)
+        {
+            mastery = "Intermediate";
+        }
+        else if (percentage < 50.0){
+            mastery = "Novice";
+        }
+
+        Log.d("Q",""+CompleteQuestions);
+        Log.d("A",""+CompleteScore);
+        Log.d("percentage",""+percentage);
+
 
         QuizHelper activityQuizScore = new QuizHelper();
-        activityQuizScore.saveToRecentActivity(subTopic , TotalScore);
+        activityQuizScore.saveToRecentActivity(subTopic , TotalScore , mastery);
 
         String noContent = " Congratulation, You completed the Quiz. Score is " + TotalScore;
         String EQ = "Total Easy Questions Attempted ="+TotalEasyQuestion ;
