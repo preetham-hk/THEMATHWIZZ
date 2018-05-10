@@ -62,7 +62,6 @@ public class GoogleHelpers {
                                 Log.d("Execution", "1");
                                 saveNewUserGoogle(userAccount);
                             } else {
-
                                 showProgressDialog("Logging you");
                                 Log.d("Execution", "2");
                                 loginGoogleUser(objects.get(0), userAccount);
